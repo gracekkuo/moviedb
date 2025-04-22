@@ -1,0 +1,12 @@
+# Ignore Python virtual environment
+env/
+
+# Ignore model files
+models/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Mac-specific
+.DS_Store

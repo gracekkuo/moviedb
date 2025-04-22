@@ -9,9 +9,9 @@ function App() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/query', {
+      const res = await axios.post('http://localhost:5001/query', {
         query: query
-      });
+      });      
       setResponse(res.data);
     } catch (err) {
       setResponse({ error: "Backend not reachable or an error occurred." });

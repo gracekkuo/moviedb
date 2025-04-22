@@ -14,11 +14,13 @@ def handle_sql_query(query):
     finally:
         conn.close()
 
-def handle_nosql_query(query):
+def handle_nosql_query(query_str):
     client = pymongo.MongoClient(MONGO_URI)
     db = client[MONGO_DB]
     try:
+        query = eval(query_str)  # Caution: only if you're trusting the model or have good safety wrappers
         results = db.reviews.find(query)
-        return [doc for doc in results]
+        return list(results)
     finally:
         client.close()
+
