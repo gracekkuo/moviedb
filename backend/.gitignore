@@ -1,12 +1,19 @@
-# Ignore Python virtual environment
-env/
+# Ignore macOS metadata
+.DS_Store
 
-# Ignore model files
-models/
-
-# Python cache files
+# Ignore Python cache
 __pycache__/
 *.pyc
 
-# Mac-specific
-.DS_Store
+# Ignore virtual environments
+env/
+.venv/
+
+# Ignore data or model files
+backend/ml-latest-small/
+models/
+
+# Ignore any env vars or secrets (if you use them)
+.env
+config.py
+openai_key.txt
