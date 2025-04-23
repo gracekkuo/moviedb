@@ -1,34 +1,50 @@
 from config import MYSQL_CONFIG, MONGO_URI, MONGO_DB
 import pymysql
-import pymongo
 from bson import ObjectId
 import ast
 
 def handle_sql_query(query):
-    conn = pymysql.connect(**MYSQL_CONFIG)
     try:
+        conn = pymysql.connect(**MYSQL_CONFIG)
         with conn.cursor() as cursor:
             cursor.execute(query)
-            results = cursor.fetchall()
-            columns = [desc[0] for desc in cursor.description]
-            return [dict(zip(columns, row)) for row in results]
+            # Check if the query returns rows (e.g., SELECT)
+            if cursor.description:
+                columns = [desc[0] for desc in cursor.description]
+                rows = cursor.fetchall()
+                return [dict(zip(columns, row)) for row in rows]
+            else:
+                # For INSERT, UPDATE, DELETE — commit and return result info
+                conn.commit()
+                return {"affected_rows": cursor.rowcount}
+    except pymysql.MySQLError as e:
+        return {"error": str(e)}
     finally:
-        conn.close()
+        if conn:
+            conn.close()
+
 
 from pymongo import MongoClient
-import ast
 
 def handle_nosql_query(query_str):
     client = MongoClient("mongodb://localhost:27017")
     db = client["moviedb"]
 
     def clean_doc(doc):
-        if "_id" in doc:
-            doc["_id"] = str(doc["_id"])
-        return doc
+        """Recursively convert all ObjectIds in doc to strings."""
+        if isinstance(doc, dict):
+            return {
+                k: clean_doc(v) for k, v in doc.items()
+            }
+        elif isinstance(doc, list):
+            return [clean_doc(item) for item in doc]
+        elif isinstance(doc, ObjectId):
+            return str(doc)
+        else:
+            return doc
 
     try:
-        # 🛡️ Schema exploration
+        # Schema exploration
         if query_str == "list_collections":
             return db.list_collection_names()
 
@@ -37,7 +53,7 @@ def handle_nosql_query(query_str):
             docs = db[collection].find().limit(3)
             return [clean_doc(doc) for doc in docs]
 
-        # 🧠 Handle projection format (tuple with projection=...)
+        # Handle projection
         if "projection=" in query_str:
             query_part, proj_part = query_str.split("projection=")
             query = ast.literal_eval(query_part.strip().rstrip(','))
@@ -45,14 +61,15 @@ def handle_nosql_query(query_str):
             results = db.reviews.find(query, projection)
             return [clean_doc(doc) for doc in results]
 
-        # 🔎 Parse generic MongoDB query
+        # General parsing
         query = ast.literal_eval(query_str.strip())
 
         if isinstance(query, tuple) and len(query) == 2:
             return [clean_doc(doc) for doc in db.reviews.find(query[0], query[1])]
 
         if isinstance(query, list):
-            return [clean_doc(doc) for doc in db.reviews.aggregate(query)]
+            results = db.reviews.aggregate(query)
+            return [clean_doc(doc) for doc in results]
 
         if isinstance(query, dict) and "_action" in query:
             action = query["_action"]
