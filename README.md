@@ -83,7 +83,7 @@ Edit
 
 Create a `.env` file inside `/backend/`:
 
-```bash
+
 OPENAI_API_KEY=your_openai_api_key_here
 Important:
 
