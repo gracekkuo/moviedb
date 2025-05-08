@@ -17,6 +17,10 @@ It translates user input into SQL (MySQL) or NoSQL (MongoDB) queries through Lla
 ## Project Structure
 
 project/
+
+
+
+
 ├── backend/
 
 
