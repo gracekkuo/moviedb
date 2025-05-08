@@ -16,6 +16,8 @@ cpp
 Copy
 Edit
 project/
+
+
 ├── backend/
 │   ├── app.py
 │   ├── config.py   <-- Configure your MySQL/Mongo credentials here
