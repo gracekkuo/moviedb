@@ -1,10 +1,10 @@
-flask
-flask-cors
-openai
-pymysql
+Flask
+Flask-Cors
+SQLAlchemy
+PyMySQL
 pymongo
-python-dotenv
-sqlalchemy
 llama-cpp-python
+openai
+python-dotenv
 numpy
-Pandas
+pandas
