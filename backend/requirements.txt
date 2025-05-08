@@ -1,7 +1,10 @@
-Flask
-Flask-Cors
-SQLAlchemy
-PyMySQL
-pymongo
-llama-cpp-python
+flask
+flask-cors
 openai
+pymysql
+pymongo
+python-dotenv
+sqlalchemy
+llama-cpp-python
+numpy
+Pandas
