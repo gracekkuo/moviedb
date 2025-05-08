@@ -105,21 +105,43 @@ Edit
 docker-compose up -d
 2. Open Two Terminals
 Terminal 1: Backend (Flask)
-bash
-Copy
-Edit
-cd backend/
+
+Backend: 
+cd backend
 source env/bin/activate
-python app.py
-Flask server will be available at: http://127.0.0.1:5000/
+
+docker-compose up -d 
+
+export OPENAI_API_KEY=your-password-here
+
+FLASK_APP=app.py flask run --port=5001
+
+#make sure all the sql configurations are good for your comp
+
+
+python load_sql_data.py
 
 Terminal 2: Frontend (React)
+
+
 bash
+
+
 Copy
+
+
 Edit
+
+
 cd frontend/
+
+
 npm install  # Only needed the first time
+
+
 npm start
+
+
 React frontend will open at: http://localhost:3000/
 
 
