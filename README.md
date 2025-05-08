@@ -18,15 +18,55 @@ It translates user input into SQL (MySQL) or NoSQL (MongoDB) queries through Lla
 
 project/
 ├── backend/
+
+
+
+
 │ ├── app.py
+
+
+
+
 │ ├── config.py <-- Configure your MySQL/Mongo credentials here
+
+
+
+
 │ ├── handlers/
+
+
+
+
 │ ├── requirements.txt
+
+
+
+
 │ ├── utils/
+
+
+
+
 ├── frontend/
+
+
+
+
 │ ├── src/
+
+
+
+
 │ ├── public/
+
+
+
+
 ├── README.md
+
+
+
+
 └── flow_diagram.png
 
 yaml
