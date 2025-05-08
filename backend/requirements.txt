@@ -1,0 +1,7 @@
+Flask
+Flask-Cors
+SQLAlchemy
+PyMySQL
+pymongo
+llama-cpp-python
+openai
