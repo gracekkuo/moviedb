@@ -44,9 +44,6 @@ Rules:
 - For filtering or grouping by year, use: YEAR(release_date)
 - The primary key for movies is `id` (not `movie_id`)
 - Use correct syntax for insert/update/delete:
-    - INSERT INTO movies (id, title, vote_average) VALUES (999999, 'New Film', 7.5);
-    - UPDATE movies SET title = 'Edited Title' WHERE id = 999999;
-    - DELETE FROM movies WHERE id = 999999;
 - Do NOT include any explanation or markdown
 - Return ONLY the SQL query string
 """.strip()
